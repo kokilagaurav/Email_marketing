@@ -51,6 +51,10 @@ coverage.xml
 .pytest_cache/
 cover/
 
+email_opened_table.csv
+email_table.csv
+link_clicked_table.csv
+
 # Translations
 *.mo
 *.pot
