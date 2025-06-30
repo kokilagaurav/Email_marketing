@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Marketing Engagement Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-envelope"></i> Email Marketing Engagement Predictor</h1>
+            <p class="tagline">Predict user engagement with email campaigns</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="predictor" class="section">
+            <div class="section-header">
+                <i class="fas fa-magic"></i>
+                <h2>Predict Email Engagement</h2>
+            </div>
+            
+            <div class="form-container">
+                <form action="/" method="post">
+                    <div class="form-group">
+                        <label for="email_text">Email Content Type:</label>
+                        <select id="email_text" name="email_text" required>
+                            <option value="">Select content type...</option>
+                            <option value="long_email">long_email</option>
+                            <option value="short_emai">short_email</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email_version">Email Version:</label>
+                        <select id="email_version" name="email_version" required>
+                            <option value="">Select version...</option>
+                            <option value="A">personalized</option>
+                            <option value="B">generic</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hour">Sending Hour (1-24):</label>
+                        <input type="number" id="hour" name="hour" min="0" max="23" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weekday">Sending Day:</label>
+                        <select id="weekday" name="weekday" required>
+                            <option value="">Select day of week...</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_country">User Country:</label>
+                        <select id="user_country" name="user_country" required>
+                            <option value="">Select country...</option>
+                            <option value="US">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="FR">Canada</option>
+                            <option value="ES">Australia</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_past_purchases">User's Past Purchases:</label>
+                        <input type="number" id="user_past_purchases" name="user_past_purchases" min="0" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-chart-pie"></i> Predict Engagement
+                    </button>
+                </form>
+            </div>
+        </section>
+
+       
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Email Marketing Campaign Analysis Project. Available under the MIT License.</p>
+        </div>
+    </footer>
+</body>
+</html>
