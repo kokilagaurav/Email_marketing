@@ -1,0 +1,471 @@
+:root {
+  --primary-color: #4a6fa5;
+  --secondary-color: #166088;
+  --accent-color: #4fc3a1;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --text-color: #333;
+  --border-color: #dee2e6;
+  --border-radius: 5px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--light-color);
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Header Styles */
+header {
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 3rem 0;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header h1 i {
+  margin-right: 15px;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Section Styles */
+.section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.section-header i {
+  font-size: 2rem;
+  color: var(--accent-color);
+  margin-right: 1rem;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  color: var(--secondary-color);
+}
+
+/* Form Styles */
+.form-container {
+  background-color: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(74, 111, 165, 0.25);
+  outline: none;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  font-size: 1rem;
+}
+
+.btn i {
+  margin-right: 0.5rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+    flex-direction: column;
+  }
+  header h1 i {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  .section-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .section-header i {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-group input,
+  .form-group select,
+  .btn {
+    font-size: 16px;
+  }
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+/* Feature Importance */
+.feature-importance {
+  margin-top: 2rem;
+}
+
+.importance-bar {
+  margin-bottom: 1rem;
+  background-color: var(--light-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.bar {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+/* Workflow */
+.workflow-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.workflow-step {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  transition: var(--transition);
+}
+
+.workflow-step:hover {
+  transform: translateY(-5px);
+}
+
+.step-number {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  background-color: var(--primary-color);
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.workflow-step h3 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.workflow-step p {
+  margin-bottom: 0.5rem;
+}
+
+.workflow-step ul {
+  margin-left: 1.5rem;
+}
+
+.workflow-step li {
+  margin-bottom: 0.3rem;
+}
+
+/* Results Page */
+.result-container {
+  margin: 2rem 0;
+}
+
+.result {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+  border-top: 5px solid var(--accent-color);
+}
+
+.high-engagement {
+  border-top-color: var(--success-color);
+}
+
+.medium-engagement {
+  border-top-color: var(--warning-color);
+}
+
+.low-engagement {
+  border-top-color: var(--danger-color);
+}
+
+.result-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.high-engagement .result-icon {
+  color: var(--success-color);
+}
+
+.medium-engagement .result-icon {
+  color: var(--warning-color);
+}
+
+.low-engagement .result-icon {
+  color: var(--danger-color);
+}
+
+.prediction-label {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--border-radius);
+  margin: 1rem 0;
+}
+
+.high-engagement .prediction-label {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: var(--success-color);
+}
+
+.medium-engagement .prediction-label {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #d39e00;
+}
+
+.low-engagement .prediction-label {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: var(--danger-color);
+}
+
+/* Recommendations */
+.recommendations-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.recommendation-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.recommendation-card h3 {
+  display: flex;
+  align-items: center;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.recommendation-card h3 i {
+  margin-right: 0.8rem;
+  color: var(--accent-color);
+}
+
+.recommendation-card ul {
+  margin-left: 1.5rem;
+}
+
+.recommendation-card li {
+  margin-bottom: 0.5rem;
+}
+
+.recommendation-card p {
+  margin-bottom: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Additional styles for single page approach */
+html {
+  scroll-behavior: smooth;
+}
+
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.prediction-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin-top: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.prediction-summary.high-engagement {
+  border-left: 5px solid var(--success-color);
+}
+
+.prediction-summary.medium-engagement {
+  border-left: 5px solid var(--warning-color);
+}
+
+.prediction-summary.low-engagement {
+  border-left: 5px solid var(--danger-color);
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+  
+  .section {
+    break-inside: avoid;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+    flex-direction: column;
+  }
+  
+  header h1 i {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .section-header i {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .workflow-step {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  nav ul {
+    flex-direction: column;
+  }
+  
+  nav li {
+    width: 100%;
+  }
+  
+  nav a {
+    text-align: center;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .btn {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
