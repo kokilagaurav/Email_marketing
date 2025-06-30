@@ -21,28 +21,47 @@ def predict():
         # Collect form data
         email_text = request.form["email_text"]
         email_version = request.form["email_version"]
-        hour = int(request.form["hour"])
+        hour = request.form["hour"]
         weekday = request.form["weekday"]
         user_country = request.form["user_country"]
-        user_past_purchases = int(request.form["user_past_purchases"])
+        user_past_purchases = request.form["user_past_purchases"]
 
         # Prepare input as DataFrame for pipeline
         input_df = pd.DataFrame({
             'email_text': [email_text],
             'email_version': [email_version],
-            'hour': [hour],
+            'hour': [int(hour) if hour else 0],
             'weekday': [weekday],
             'user_country': [user_country],
-            'user_past_purchases': [user_past_purchases]
+            'user_past_purchases': [int(user_past_purchases) if user_past_purchases else 0]
         })
 
         # Predict using the loaded model (pipeline)
         pred_encoded = model.predict(input_df)[0]
         prediction = label_encoder.inverse_transform([pred_encoded])[0]
 
-        return render_template("index.html", prediction=prediction)
+        return render_template(
+            "index.html",
+            prediction=prediction,
+            email_text=email_text,
+            email_version=email_version,
+            hour=hour,
+            weekday=weekday,
+            user_country=user_country,
+            user_past_purchases=user_past_purchases
+        )
 
-    return render_template("index.html", prediction=None)
+    # For GET, set all fields to empty/None
+    return render_template(
+        "index.html",
+        prediction=None,
+        email_text=None,
+        email_version=None,
+        hour=None,
+        weekday=None,
+        user_country=None,
+        user_past_purchases=None
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

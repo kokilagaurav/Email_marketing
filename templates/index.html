@@ -24,12 +24,13 @@
             
             <div class="form-container">
                 <form action="/" method="post">
+
                     <div class="form-group">
                         <label for="email_text">Email Content Type:</label>
                         <select id="email_text" name="email_text" required>
                             <option value="">Select content type...</option>
-                            <option value="long_email">long_email</option>
-                            <option value="short_email">short_email</option>
+                            <option value="long_email" {% if email_text == 'long_email' %}selected{% endif %}>long_email</option>
+                            <option value="short_email" {% if email_text == 'short_email' %}selected{% endif %}>short_email</option>
                         </select>
                     </div>
 
@@ -37,27 +38,27 @@
                         <label for="email_version">Email Version:</label>
                         <select id="email_version" name="email_version" required>
                             <option value="">Select version...</option>
-                            <option value="personalized">personalized</option>
-                            <option value="generic">generic</option>
+                            <option value="personalized" {% if email_version == 'personalized' %}selected{% endif %}>personalized</option>
+                            <option value="generic" {% if email_version == 'generic' %}selected{% endif %}>generic</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="hour">Sending Hour (1-24):</label>
-                        <input type="number" id="hour" name="hour" min="0" max="23" required>
+                        <input type="number" id="hour" name="hour" min="0" max="23" required value="{{ hour if hour is not none else '' }}">
                     </div>
 
                     <div class="form-group">
                         <label for="weekday">Sending Day:</label>
                         <select id="weekday" name="weekday" required>
                             <option value="">Select day of week...</option>
-                            <option value="Monday">Monday</option>
-                            <option value="Tuesday">Tuesday</option>
-                            <option value="Wednesday">Wednesday</option>
-                            <option value="Thursday">Thursday</option>
-                            <option value="Friday">Friday</option>
-                            <option value="Saturday">Saturday</option>
-                            <option value="Sunday">Sunday</option>
+                            <option value="Monday" {% if weekday == 'Monday' %}selected{% endif %}>Monday</option>
+                            <option value="Tuesday" {% if weekday == 'Tuesday' %}selected{% endif %}>Tuesday</option>
+                            <option value="Wednesday" {% if weekday == 'Wednesday' %}selected{% endif %}>Wednesday</option>
+                            <option value="Thursday" {% if weekday == 'Thursday' %}selected{% endif %}>Thursday</option>
+                            <option value="Friday" {% if weekday == 'Friday' %}selected{% endif %}>Friday</option>
+                            <option value="Saturday" {% if weekday == 'Saturday' %}selected{% endif %}>Saturday</option>
+                            <option value="Sunday" {% if weekday == 'Sunday' %}selected{% endif %}>Sunday</option>
                         </select>
                     </div>
 
@@ -65,16 +66,16 @@
                         <label for="user_country">User Country:</label>
                         <select id="user_country" name="user_country" required>
                             <option value="">Select country...</option>
-                            <option value="US">United States</option>
-                            <option value="UK">United Kingdom</option>
-                            <option value="CA">Canada</option>
-                            <option value="AU">Australia</option>
+                            <option value="US" {% if user_country == 'US' %}selected{% endif %}>United States</option>
+                            <option value="UK" {% if user_country == 'UK' %}selected{% endif %}>United Kingdom</option>
+                            <option value="CA" {% if user_country == 'CA' %}selected{% endif %}>Canada</option>
+                            <option value="AU" {% if user_country == 'AU' %}selected{% endif %}>Australia</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="user_past_purchases">User's Past Purchases:</label>
-                        <input type="number" id="user_past_purchases" name="user_past_purchases" min="0" required>
+                        <input type="number" id="user_past_purchases" name="user_past_purchases" min="0" required value="{{ user_past_purchases if user_past_purchases is not none else '' }}">
                     </div>
 
                     <button type="submit" class="btn btn-primary">
