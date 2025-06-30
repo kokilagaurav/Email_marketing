@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 ensamble.ipynb
-
+soft_voting_clf.pkl
 
 # C extensions
 *.so
