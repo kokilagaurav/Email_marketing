@@ -29,84 +29,121 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
-
-def load_data(file_path: str) -> pd.DataFrame:
-    """Load data from a CSV file."""
+def load_preprocessed_data(train_processed,test_processed):
+    """
+    Load preprocessed data from CSV file.
+    
+    """
     try:
-        df = pd.read_csv(file_path)
-        df.fillna('', inplace=True)
-        logger.debug('Data loaded and NaNs filled from %s', file_path)
-        return df
-    except pd.errors.ParserError as e:
-        logger.error('Failed to parse the CSV file: %s', e)
-        raise
+        logger.info(f"Loading preprocessed data from {train_processed,test_processed}")
+        train_processed = pd.read_csv('data/interim/train_processed.csv')
+        test_processed = pd.read_csv('data/interim/train_processed.csv')
+        logger.debug('Data loaded properly')
+
+        return train_processed, test_processed
     except Exception as e:
-        logger.error('Unexpected error occurred while loading the data: %s', e)
+        logger.error(f"Error loading preprocessed data: {str(e)}")
         raise
 
 
-def drop_columns(train_df: pd.DataFrame, test_df: pd.DataFrame) -> tuple:
-    """Drop specified columns from both training and test dataframes."""
+def drop_anomaly_rows(train_data, test_data):
+    """
+    Drop rows where engagement_status is 'Anomaly' from both train and test data
+    
+    """
     try:
-        # Debug: print available columns
-        logger.debug('Train columns: %s', train_df.columns.tolist())
-        logger.debug('Test columns: %s', test_df.columns.tolist())
-        
-        # Prepare data first
+        train_initial_rows = len(train_data)
+        test_initial_rows = len(test_data)
+
+        if 'engagement_status' in train_data.columns:
+            train_data = train_data[train_data['engagement_status'] != 'Anomaly'].reset_index(drop=True)
+            train_rows_dropped = train_initial_rows - len(train_data)
+            logger.info(f"Dropped {train_rows_dropped} rows with Anomaly status from training data")
+
+        if 'engagement_status' in test_data.columns:
+            test_data = test_data[test_data['engagement_status'] != 'Anomaly'].reset_index(drop=True)
+            test_rows_dropped = test_initial_rows - len(test_data)
+            logger.info(f"Dropped {test_rows_dropped} rows with Anomaly status from test data")
+
+        return train_data, test_data
+    except Exception as e:
+        logger.error(f"Error dropping anomaly rows: {str(e)}")
+        raise
+
+
+def drop_columns(train_data, test_data):
+    """
+    Drop unnecessary columns from both train and test DataFrames.
+    
+    """
+    try:
         columns_to_drop = ['email_id', 'clicked', 'opened']
         
-        # Store initial dataframes
-        X_train = train_df.copy()
-        X_test = test_df.copy()
+        train_copy = train_data.copy()
+        test_copy = test_data.copy()
         
-        # Check if target column exists, if not create dummy targets
-        if 'engagement_status' in X_train.columns:
-            y_train = X_train['engagement_status'].values
-            y_test = X_test['engagement_status'].values
-            columns_to_drop.append('engagement_status')
-        else:
-            logger.warning('Target column not found, creating dummy targets')
-            y_train = None
-            y_test = None
+        train_copy.drop(columns=columns_to_drop, inplace=True)
+        test_copy.drop(columns=columns_to_drop, inplace=True)
         
-        # Only drop columns that actually exist
-        existing_columns_to_drop = [col for col in columns_to_drop if col in X_train.columns]
-        logger.debug('Dropping columns: %s', existing_columns_to_drop)
+        logger.info(f"Dropped unnecessary columns {columns_to_drop} from both train and test data")
+        return train_copy, test_copy
         
-        X_train.drop(columns=existing_columns_to_drop, inplace=True)
-        X_test.drop(columns=existing_columns_to_drop, inplace=True)
-        
-        logger.debug('Columns dropped and X, y split created for train and test data')
-        return X_train, X_test, y_train, y_test
     except Exception as e:
-        logger.error('Error dropping columns and creating splits: %s', e)
+        logger.error(f"Error dropping columns: {str(e)}")
         raise
 
+def save_cleaned_data(train_data, test_data):
+    """
+    Save cleaned train and test data to CSV files in the data/cleaned folder.
 
-
-
-def save_data(df: pd.DataFrame, file_path: str) -> None:
-    """Save the dataframe to a CSV file."""
+    """
     try:
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        df.to_csv(file_path, index=False)
-        logger.debug('Data saved to %s', file_path)
+        # Create data/cleaned directory if it doesn't exist
+        data_dir = os.path.join("./data", "cleaned")
+        os.makedirs(data_dir, exist_ok=True)
+        
+        # Define output paths
+        train_output_path = os.path.join(data_dir, 'train_cleaned.csv')
+        test_output_path = os.path.join(data_dir, 'test_cleaned.csv')
+        
+        # Save train data
+        logger.info(f"Saving cleaned training data to {train_output_path}")
+        train_data.to_csv(train_output_path, index=False)
+        logger.info(f"Successfully saved cleaned training data with shape {train_data.shape}")
+        
+        # Save test data
+        logger.info(f"Saving cleaned test data to {test_output_path}")
+        test_data.to_csv(test_output_path, index=False)
+        logger.info(f"Successfully saved cleaned test data with shape {test_data.shape}")
+        
     except Exception as e:
-        logger.error('Unexpected error occurred while saving the data: %s', e)
+        logger.error(f"Error saving cleaned data: {str(e)}")
         raise
 
 def main():
     try:
-        train_data = load_data('./data/interim/train_processed.csv')
-        test_data = load_data('./data/interim/test_processed.csv')
+        # Load preprocessed data
+        logger.info("Loading preprocessed data...")
+        train_data, test_data = load_preprocessed_data('data/interim/train_processed.csv', 
+                                                      'data/interim/test_processed.csv')
 
-        X_train, X_test, y_train, y_test = drop_columns(train_data, test_data)
+        # Drop anomaly rows
+        logger.info("Dropping anomaly rows...")
+        train_data, test_data = drop_anomaly_rows(train_data, test_data)
 
-        save_data(X_train, os.path.join("./data", "processed", "train_emails.csv"))
-        save_data(X_test, os.path.join("./data", "processed", "test_emails.csv"))
+        # Drop unnecessary columns
+        logger.info("Dropping unnecessary columns...")
+        train_data, test_data = drop_columns(train_data, test_data)
+
+        # Save cleaned data
+        logger.info("Saving cleaned data...")
+        save_cleaned_data(train_data, test_data)
+
+        logger.info("Feature engineering process completed successfully")
+
     except Exception as e:
-        logger.error('Failed to complete the feature engineering process: %s', e)
-        print(f"Error: {e}")
+        logger.error(f"Error in main execution: {str(e)}")
+        raise
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

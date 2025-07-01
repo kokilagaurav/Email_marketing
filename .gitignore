@@ -4,6 +4,11 @@ __pycache__/
 *$py.class
 ensamble.ipynb
 soft_voting_clf.pkl
+dvc.yaml
+params.yaml
+data
+logs
+email_analysis.csv
 
 # C extensions
 *.so
