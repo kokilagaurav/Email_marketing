@@ -9,6 +9,7 @@ params.yaml
 data
 logs
 email_analysis.csv
+notebook
 
 # C extensions
 *.so

@@ -2,9 +2,6 @@ import pandas as pd
 import os
 import logging
 import yaml
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 
 
 # Ensure the "logs" directory exists
